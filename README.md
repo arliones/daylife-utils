@@ -11,6 +11,7 @@
 ## Included Tools
 
 - **screen-layout-select**: Automatically applies a custom monitor layout depending on the network you are connected to.
+- **cobs**: Opens an Obsidian vault and a Claude Code session side by side, tiled on the largest monitor.
 
 ## Requirements
 
