@@ -12,6 +12,7 @@
 
 - **screen-layout-select**: Automatically applies a custom monitor layout depending on the network you are connected to.
 - **cobs**: Opens an Obsidian vault and a Claude Code session side by side, tiled on the largest monitor.
+- **codes**: Opens VS Code in the current directory side by side with the terminal, tiled on the largest monitor, and starts a Claude Code session in that terminal.
 
 ## Requirements
 
