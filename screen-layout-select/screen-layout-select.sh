@@ -12,7 +12,7 @@ if [[ $IP == 192.168.1.* ]]; then
 
 elif [[ $IP == 191.36.9.* ]]; then
     echo "Corporate network detected"
-    /home/arliones/.screenlayout/coord.sh
+    /home/arliones/.screenlayout/ifsc.sh
 
 # elif [[ $IP == 172.16.* || $IP == 172.17.* ]]; then
 #     echo "Lab network detected"
