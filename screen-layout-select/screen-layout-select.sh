@@ -1,7 +1,14 @@
 #!/bin/bash
 
-# Gets the IP of the connected interface
-IP=$(hostname -I | awk '{print $1}')
+# Gets the IPv4 of the first connected wired interface. Wi-Fi is ignored since
+# it doesn't imply a fixed location; virtual interfaces (docker, veth, lo) are
+# skipped because they have no backing physical device.
+IP=""
+for IFACE in /sys/class/net/*; do
+    [[ -e $IFACE/device && ! -d $IFACE/wireless && $(cat "$IFACE/type") == 1 ]] || continue
+    IP=$(ip -4 -o addr show dev "$(basename "$IFACE")" scope global | awk '{split($4, a, "/"); print a[1]; exit}')
+    [[ -n $IP ]] && break
+done
 
 echo "Detected IP: $IP"
 
