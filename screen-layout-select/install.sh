@@ -29,17 +29,18 @@ install -m 0755 "${SRC_SCRIPT}" "${DST_SCRIPT}"
 # Copy .desktop file
 install -m 0644 "${SRC_DESKTOP}" "${DST_DESKTOP}"
 
-# Ensure the .desktop file points to the installed path and has a small delay
+# Ensure the .desktop file points to the installed path
 # Replace the Exec= line with one that uses the real script path
-# Note: uses portable sed for Linux (GNU sed)
-ESCAPED_PATH="$(printf '%s\n' "${DST_SCRIPT}" | sed 's/[&/\]/\\&/g')"
+# Note: uses portable sed for Linux (GNU sed). '&' must be escaped in the
+# replacement, otherwise sed expands it to the whole matched line.
+ESCAPED_PATH="$(printf '%s\n' "${DST_SCRIPT}" | sed 's/[&|\]/\\&/g')"
 sed -i \
-  -e "s|^Exec=.*$|Exec=/bin/bash -lc \"sleep 3 && ${ESCAPED_PATH}\"|g" \
+  -e "s|^Exec=.*$|Exec=${ESCAPED_PATH}|g" \
   -e "s|^X-GNOME-Autostart-enabled=.*$|X-GNOME-Autostart-enabled=true|g" \
   "${DST_DESKTOP}"
 
 # If the keys do not exist, ensure they are included
-grep -q '^Exec=' "${DST_DESKTOP}" || echo "Exec=/bin/bash -lc \"sleep 3 && ${DST_SCRIPT}\"" >> "${DST_DESKTOP}"
+grep -q '^Exec=' "${DST_DESKTOP}" || echo "Exec=${DST_SCRIPT}" >> "${DST_DESKTOP}"
 grep -q '^X-GNOME-Autostart-enabled=' "${DST_DESKTOP}" || echo "X-GNOME-Autostart-enabled=true" >> "${DST_DESKTOP}"
 grep -q '^OnlyShowIn=' "${DST_DESKTOP}" || echo "OnlyShowIn=GNOME;Unity;" >> "${DST_DESKTOP}"
 

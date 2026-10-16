@@ -2,6 +2,6 @@
 Type=Application
 Name=Screen Layout Selector
 Comment=Adjusts monitor layout according to the network
-Exec=/bin/bash -lc "sleep 3 && ~/.local/bin/screen-layout-select.sh"
+Exec=~/.local/bin/screen-layout-select.sh
 X-GNOME-Autostart-enabled=true
 OnlyShowIn=GNOME;Unity;
